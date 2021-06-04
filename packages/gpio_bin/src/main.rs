@@ -1,7 +1,6 @@
 extern crate sysfs_gpio;
 
-use std::env;
-use std::process;
+use std::{env, process, thread::sleep, time};
 use sysfs_gpio::{Direction, Pin};
 
 fn main() {
@@ -38,6 +37,7 @@ fn main() {
     let my_pin = Pin::new(pin_num);
 
     let result = my_pin.with_exported(|| {
+        sleep(time::Duration::from_millis(80));
         my_pin.set_direction(direction)?;
         return Ok(());
     });

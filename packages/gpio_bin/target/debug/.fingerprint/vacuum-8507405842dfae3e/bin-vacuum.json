@@ -1,0 +1,1 @@
+{"rustc":18145874729619535536,"features":"[]","target":13993712118986036653,"profile":18108590124580271077,"path":1036222786711178230,"deps":[[13885738414406399743,"sysfs_gpio",false,1328205434321075091]],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/vacuum-8507405842dfae3e/dep-bin-vacuum"}}],"rustflags":[],"metadata":10364641145609794764,"config":0,"compile_kind":0}
