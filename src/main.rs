@@ -23,6 +23,7 @@ fn main() {
     let pin_num = match pin_num_arg.parse::<u64>() {
         Ok(n) => n,
         Err(_) => {
+            println!("Argument 1 is not parseable to a number");
             process::exit(1);
         }
     };
