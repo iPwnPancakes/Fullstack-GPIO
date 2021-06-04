@@ -1,5 +1,5 @@
 [package]
-name = "Vacuum"
+name = "vacuum"
 version = "0.1.0"
 authors = ["iPwnPancakes <daniel.buenrrostro@bigdco.com>"]
 edition = "2018"

@@ -10,6 +10,16 @@ fn main() {
     let pin_num = parse_pin_number(pin_num_arg);
     let direction = parse_direction(direction_arg);
 
+    println!(
+        "Pin: {} Direction: {}",
+        pin_num,
+        match direction {
+            Direction::In => "in",
+            Direction::Out => "out",
+            Direction::High => "high",
+            Direction::Low => "low",
+        }
+    );
     let my_pin = Pin::new(pin_num);
 
     let result = my_pin.with_exported(|| {
@@ -18,8 +28,8 @@ fn main() {
     });
 
     match result {
-        Ok(_) => println!("Did it"),
-        Err(err) => println!("fucked up, {}", err),
+        Ok(_) => println!("Done"),
+        Err(err) => println!("Unhandled Error: {}", err),
     }
 }
 
