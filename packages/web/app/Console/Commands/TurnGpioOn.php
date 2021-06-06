@@ -3,11 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class TurnGpioOn extends Command
 {
-    protected $signature = 'gpio';
+    protected $signature = 'gpio:set {pin_number} {direction}';
 
     public function __construct()
     {
@@ -16,6 +15,9 @@ class TurnGpioOn extends Command
 
     public function handle()
     {
-        exec('sudo vacuum 60 out');
+        $pin = $this->argument('pin_number');
+        $direction = $this->argument('direction');
+
+        exec("sudo vacuum $pin $direction");
     }
 }
