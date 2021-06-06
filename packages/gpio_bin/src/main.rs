@@ -1,38 +1,19 @@
 extern crate sysfs_gpio;
 
-use std::{env, process, thread::sleep, time};
+use anyhow::{anyhow, Context, Result};
+use std::{env, thread::sleep, time};
 use sysfs_gpio::{Direction, Pin};
 
-fn main() {
-    let pin_num_arg = match env::args().nth(1) {
-        Some(s) => s,
-        None => {
-            println!("Argument 1 must be specified");
-            process::exit(1);
-        }
-    };
-    let direction_arg = match env::args().nth(2) {
-        Some(s) => s,
-        None => {
-            println!("Argument 2 must be specified");
-            process::exit(1);
-        }
-    };
+fn main() -> Result<()> {
+    let pin_num_arg = env::args()
+        .nth(1)
+        .ok_or(anyhow!("Argument 1 must be specified"))?;
+    let direction_arg = env::args()
+        .nth(2)
+        .ok_or(anyhow!("Argument 2 must be specified"))?;
 
-    let pin_num = match pin_num_arg.parse::<u64>() {
-        Ok(n) => n,
-        Err(_) => {
-            println!("Argument 1 is not parseable to a number");
-            process::exit(1);
-        }
-    };
-    let direction = match parse_direction(direction_arg) {
-        Ok(dir) => dir,
-        Err(e) => {
-            println!("Error: {}", e);
-            process::exit(1);
-        }
-    };
+    let pin_num = pin_num_arg.parse::<u64>()?;
+    let direction = parse_direction(&direction_arg)?;
 
     let my_pin = Pin::new(pin_num);
 
@@ -42,24 +23,15 @@ fn main() {
         return Ok(());
     });
 
-    match result {
-        Ok(_) => {
-            println!("Done");
-            process::exit(0);
-        }
-        Err(err) => {
-            println!("Unhandled Error: {}", err);
-            process::exit(1);
-        }
-    }
+    result.context("Tried setting pins")
 }
 
-fn parse_direction(str: String) -> Result<Direction, String> {
-    if str == "in" {
-        return Ok(Direction::In);
-    } else if str == "out" {
-        return Ok(Direction::Out);
-    } else {
-        return Err("Invalid Direction: Must be either in or out".to_string());
+fn parse_direction(str: &str) -> Result<Direction, anyhow::Error> {
+    match str {
+        "in" => Ok(Direction::In),
+        "out" => Ok(Direction::Out),
+        _ => Err(anyhow!(
+            "Invalid Direction: Must be either in or out".to_string()
+        )),
     }
 }
