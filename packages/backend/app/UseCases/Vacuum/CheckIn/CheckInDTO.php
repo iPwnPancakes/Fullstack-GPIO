@@ -4,7 +4,7 @@ namespace App\UseCases\Vacuum\CheckIn;
 
 use App\Core\Request;
 
-class CheckOutIn extends Request
+class CheckInDTO extends Request
 {
     public $public_ip;
 }
