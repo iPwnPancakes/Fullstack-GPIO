@@ -9,3 +9,4 @@ edition = "2018"
 [dependencies]
 sysfs_gpio = "0.5"
 anyhow = "1.0.40"
+clap = "2.33.3"
