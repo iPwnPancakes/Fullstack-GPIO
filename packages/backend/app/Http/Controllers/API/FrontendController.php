@@ -30,7 +30,7 @@ class FrontendController extends Controller
             $result = $this->getConnectionInformationQuery->execute($dto);
 
             if ($result->isFailure()) {
-                return response()->json($result->getErrorMessageBag()->toArray(), 500);
+                return response()->json(['errors' => $result->getErrors()], 500);
             }
 
             /** @var GetConnectionInformationResponseDTO */
@@ -47,15 +47,15 @@ class FrontendController extends Controller
         }
     }
 
-    public function ping(Request $request)
+    public function ping($id)
     {
         try {
-            $dto = new PingDTO($request->toArray());
+            $dto = new PingDTO(['vacuum_id' =>  $id]);
 
             $result = $this->pingCommand->execute($dto);
 
             if ($result->isFailure()) {
-                return response()->json($result->getErrorMessageBag()->toArray(), 500);
+                return response()->json(['errors' => $result->getErrors()], 500);
             }
 
             return response()->json(['message' => 'ok'], 200);
@@ -77,7 +77,7 @@ class FrontendController extends Controller
             $result = $this->setPowerCommand->execute($dto);
 
             if ($result->isFailure()) {
-                return response()->json($result->getErrorMessageBag()->toArray(), 500);
+                return response()->json(['errors' => $result->getErrors()], 500);
             }
 
             return response()->json(['message' => 'ok'], 200);

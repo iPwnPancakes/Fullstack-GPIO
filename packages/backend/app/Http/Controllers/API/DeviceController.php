@@ -27,7 +27,7 @@ class DeviceController extends Controller
             $check_in_result = $this->checkInCommand->execute($dto);
 
             if ($check_in_result->isFailure()) {
-                return response()->json(['errors' => $check_in_result->getErrorMessageBag()->toArray()], 500);
+                return response()->json(['errors' => $check_in_result->getErrors()], 500);
             }
 
             return response()->json(['message' => 'ok'], 200);
@@ -44,7 +44,7 @@ class DeviceController extends Controller
             $check_out_result = $this->checkOutCommand->execute($dto);
 
             if ($check_out_result->isFailure()) {
-                return response()->json(['errors' => $check_out_result->getErrorMessageBag()->toArray()], 500);
+                return response()->json(['errors' => $check_out_result->getErrors()], 500);
             }
 
             return response()->json(['message' => 'ok'], 200);

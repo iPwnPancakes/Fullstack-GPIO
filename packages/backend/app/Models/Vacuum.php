@@ -9,6 +9,10 @@ class Vacuum extends Model
 {
     use HasFactory;
 
+    protected $table = 'vacuum';
+
+    public $timestamps = false;
+
     protected $casts = [
         'last_communication_at' => 'timestamp',
         'connected' => 'boolean',

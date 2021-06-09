@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\DeviceController;
+use App\Http\Controllers\API\FrontendController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('v1')->group(function () {
+    Route::prefix('frontend')->group(function () {
+        Route::get('ping/{id}', [FrontendController::class, 'ping']);
+        Route::get('getConnectionInfo/{id}', [FrontendController::class, 'getConnectionInformation']);
+        Route::post('set_power', [FrontendController::class, 'setPower']);
+    });
+
+    Route::prefix('devices')->group(function () {
+        Route::get('check_in', [DeviceController::class, 'check_in']);
+        Route::get('check_out', [DeviceController::class, 'check_out']);
+    });
 });
