@@ -102,6 +102,7 @@ fn direction_to_string(direction: Direction) -> Result<String, anyhow::Error> {
     return match direction {
         Direction::In => Ok("in".to_owned()),
         Direction::Out => Ok("out".to_owned()),
-        _ => Err(anyhow!("Unsupported direction")),
+        Direction::High => Ok("high".to_owned()),
+        Direction::Low => Ok("low".to_owned()),
     };
 }
