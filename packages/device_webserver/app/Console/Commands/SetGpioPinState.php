@@ -43,6 +43,8 @@ class SetGpioPinState extends Command
             }
         } catch (Exception $e) {
             Log::error($e->getMessage());
+
+            throw $e;
         }
     }
 }
