@@ -86,13 +86,7 @@ fn get_pin_status(num: u64) -> Result<PinConfig, anyhow::Error> {
 fn set_pin_direction(pin_number: u64, direction: Direction) -> Result<(), anyhow::Error> {
     let pin = Pin::new(pin_number);
 
-    let result = pin.with_exported(|| {
-        sleep(time::Duration::from_millis(80));
-        pin.set_direction(direction)?;
-        return Ok(());
-    });
-
-    return match result {
+    return match pin.set_direction(direction) {
         Ok(()) => Ok(()),
         Err(_) => Err(anyhow!("Could not set direction of pin")),
     };
