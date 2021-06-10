@@ -2,7 +2,7 @@ extern crate sysfs_gpio;
 
 use anyhow::{anyhow, Result};
 use clap::{App, AppSettings, Arg, SubCommand};
-use std::{process, thread::sleep, time};
+use std::{process};
 use sysfs_gpio::{Direction, Pin};
 
 struct PinConfig {
