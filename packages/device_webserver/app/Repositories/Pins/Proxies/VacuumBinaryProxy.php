@@ -41,7 +41,11 @@ class VacuumBinaryProxy
             return Result::fail('Pin direction given from binary is not valid');
         }
 
-        return Result::ok(new VacuumBinaryProxyResponseDTO(['pin_number' => (int)$pin_number_str, 'direction' => $direction_str]));
+        $response = new VacuumBinaryProxyResponseDTO();
+        $response->pin_number = (int)$pin_number_str;
+        $response->power = $direction_str === 'out';
+
+        return Result::ok($response);
     }
 
     /**
