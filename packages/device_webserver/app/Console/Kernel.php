@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ReadPinState;
 use App\Console\Commands\SetGpioPinState;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
@@ -14,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        SetGpioPinState::class
+        SetGpioPinState::class,
+        ReadPinState::class
     ];
 
     /**
