@@ -17,7 +17,7 @@ class VacuumBinaryProxy
         exec("sudo vacuum read $pin_number", $result_strings, $result_code);
 
         if ($result_code !== 0) {
-            return Result::fail('Not able to read pin');
+            return Result::fail($result_strings[0] ?? 'Error: Not able to read pin');
         }
 
         if (empty($result_strings)) {
@@ -62,7 +62,7 @@ class VacuumBinaryProxy
         exec($command, $result_strings, $result_code);
 
         if ($result_code !== 0) {
-            return Result::fail('Not able to write to pin');
+            return Result::fail($result_strings[0] ?? 'Error: Not able to write to pin');
         }
 
         return Result::ok();
