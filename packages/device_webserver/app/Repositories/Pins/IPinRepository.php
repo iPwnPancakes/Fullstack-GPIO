@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\GpioPins;
+namespace App\Repositories\Pins;
 
 use App\Domain\Pins\Pin;
 
-interface IGpioPinRepository
+interface IPinRepository
 {
     public function exists(int $pin): bool;
     public function getPinByPinNumber(int $pin): Pin;

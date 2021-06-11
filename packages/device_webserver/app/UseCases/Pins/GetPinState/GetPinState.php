@@ -5,13 +5,13 @@ namespace App\UseCases\Pins\GetPinState;
 use App\Core\Request;
 use App\Core\Result;
 use App\Core\UseCase;
-use App\Repositories\GpioPins\IGpioPinRepository;
+use App\Repositories\Pins\IPinRepository;
 
 class GetPinState extends UseCase
 {
     private $pinRepo;
 
-    public function __construct(IGpioPinRepository $pinRepo)
+    public function __construct(IPinRepository $pinRepo)
     {
         $this->pinRepo = $pinRepo;
     }

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Repositories\GpioPins\IGpioPinRepository;
-use App\Repositories\GpioPins\VacuumBinaryPinRepository;
+use App\Repositories\Pins\VacuumBinaryPinRepository;
+use App\Repositories\Pins\IPinRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryProvider extends ServiceProvider
@@ -15,6 +15,6 @@ class RepositoryProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(IGpioPinRepository::class, VacuumBinaryPinRepository::class);
+        $this->app->bind(IPinRepository::class, VacuumBinaryPinRepository::class);
     }
 }
