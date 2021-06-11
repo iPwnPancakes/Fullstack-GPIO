@@ -32,8 +32,8 @@ fn main() -> Result<()> {
                     println!("{} {}", value_as_string, direction_as_string);
                     process::exit(0);
                 }
-                Err(_) => {
-                    println!("Could not read from pin {}", pin_number);
+                Err(e) => {
+                    println!("{}", e);
                     process::exit(1);
                 }
             }
@@ -44,8 +44,8 @@ fn main() -> Result<()> {
             let direction = parse_direction(value).unwrap();
 
             match set_pin_direction(pin_number, direction) {
-                Err(_) => {
-                    println!("Could not write to pin {}", pin_number);
+                Err(e) => {
+                    println!("{}", e);
                     process::exit(1);
                 }
                 _ => {
@@ -88,7 +88,7 @@ fn set_pin_direction(pin_number: u64, direction: Direction) -> Result<(), anyhow
 
     return match pin.set_direction(direction) {
         Ok(()) => Ok(()),
-        Err(_) => Err(anyhow!("Could not set direction of pin")),
+        Err(e) => Err(anyhow!(e)),
     };
 }
 
