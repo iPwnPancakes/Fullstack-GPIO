@@ -35,6 +35,6 @@ class SetPinPower extends UseCase
 
         $this->pinRepo->save($pin);
 
-        return Result::fail('Not implemented');
+        return Result::ok();
     }
 }
