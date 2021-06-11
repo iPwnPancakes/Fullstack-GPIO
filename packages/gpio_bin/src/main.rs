@@ -45,7 +45,7 @@ fn main() -> Result<()> {
 
             match set_pin_direction(pin_number, direction) {
                 Err(_) => {
-                    println!("Could not read from pin {}", pin_number);
+                    println!("Could not write to pin {}", pin_number);
                     process::exit(1);
                 }
                 _ => {
@@ -56,7 +56,7 @@ fn main() -> Result<()> {
         (_, _) => {}
     }
 
-    return Err(anyhow!("Help"));
+    return Err(anyhow!("Unhandled error"));
 }
 
 fn parse_direction(str: &str) -> Result<Direction, anyhow::Error> {
