@@ -12,6 +12,7 @@ class VacuumBinaryProxy
     public function read(int $pin_number): Result
     {
         $result = shell_exec("sudo vacuum read $pin_number");
+        $result = trim($result);
 
         if (empty($result)) {
             return Result::fail('No response given from binary');
@@ -50,6 +51,7 @@ class VacuumBinaryProxy
 
         $command = 'sudo vacuum write ' . $pin_number . ' ' . $direction;
         $result = shell_exec($command);
+        $result = trim($result);
 
         if (!empty($result)) {
             return Result::fail("Pin Write Response: $result");
