@@ -11,7 +11,7 @@ class VacuumBinaryProxy
      */
     public function read(int $pin_number): Result
     {
-        $result = shell_exec("sudo vacuum read $pin_number");
+        $result = shell_exec("vacuum read $pin_number");
         $result = trim($result);
 
         if (empty($result)) {
@@ -24,11 +24,11 @@ class VacuumBinaryProxy
 
         $tokens = explode(' ', $result);
 
-        $pin_number_str = $tokens[0] ?? null;
+        $value_str = $tokens[0] ?? null;
         $direction_str = $tokens[1] ?? null;
 
-        if (!is_numeric($pin_number_str)) {
-            return Result::fail('Pin number given from binary is not valid');
+        if (!is_numeric($value_str)) {
+            return Result::fail('Value given from binary is not valid');
         }
 
         if ($direction_str !== 'in' && $direction_str !== 'out') {
@@ -36,7 +36,8 @@ class VacuumBinaryProxy
         }
 
         $response = new VacuumBinaryProxyResponseDTO();
-        $response->pin_number = (int)$pin_number_str;
+        $response->pin_number = $pin_number;
+        $response->value = (int)$value_str;
         $response->power = $direction_str === 'out';
 
         return Result::ok($response);
@@ -49,7 +50,7 @@ class VacuumBinaryProxy
     {
         $direction = $power ? 'out' : 'in';
 
-        $command = 'sudo vacuum write ' . $pin_number . ' ' . $direction;
+        $command = 'vacuum write ' . $pin_number . ' ' . $direction;
         $result = shell_exec($command);
         $result = trim($result);
 
