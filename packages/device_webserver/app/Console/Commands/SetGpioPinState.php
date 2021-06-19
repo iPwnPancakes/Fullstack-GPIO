@@ -39,7 +39,7 @@ class SetGpioPinState extends Command
             $result = $this->setGpioPinStateCommand->execute($dto);
 
             if ($result->isFailure()) {
-                throw new Exception('Could not set state of GPIO pin');
+                throw new Exception($result->getErrorMessageBag()->first());
             }
         } catch (Exception $e) {
             Log::error($e->getMessage());
