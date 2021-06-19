@@ -11,24 +11,17 @@ class VacuumBinaryProxy
      */
     public function read(int $pin_number): Result
     {
-        $result_strings = [];
-        $result_code = null;
+        $result = shell_exec("sudo vacuum read $pin_number");
 
-        exec("sudo vacuum read $pin_number", $result_strings, $result_code);
-
-        if ($result_code !== 0) {
-            return Result::fail($result_strings[0] ?? 'Error: Not able to read pin');
-        }
-
-        if (empty($result_strings)) {
+        if (empty($result)) {
             return Result::fail('No response given from binary');
         }
 
-        if (!is_string($result_strings[0])) {
+        if (!is_string($result)) {
             return Result::fail('Invalid response given from binary');
         }
 
-        $tokens = explode(' ', $result_strings[0]);
+        $tokens = explode(' ', $result);
 
         $pin_number_str = $tokens[0] ?? null;
         $direction_str = $tokens[1] ?? null;
@@ -53,16 +46,13 @@ class VacuumBinaryProxy
      */
     public function write(int $pin_number, bool $power): Result
     {
-        $result_strings = [];
-        $result_code = null;
-
         $direction = $power ? 'out' : 'in';
 
         $command = 'sudo vacuum write ' . $pin_number . ' ' . $direction;
-        exec($command, $result_strings, $result_code);
+        $result = shell_exec($command);
 
-        if ($result_code !== 0) {
-            return Result::fail($result_strings[0] ?? 'Error: Not able to write to pin');
+        if (!empty($result)) {
+            return Result::fail("Pin Write Response: $result");
         }
 
         return Result::ok();
