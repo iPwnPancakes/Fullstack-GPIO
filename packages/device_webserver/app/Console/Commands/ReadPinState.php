@@ -39,7 +39,7 @@ class ReadPinState extends Command
             /** @var GetPinStateResponseDTO */
             $pin = $result->getValue();
 
-            var_dump($pin->pin_number, $pin->power_state);
+            Log::debug($pin->toArray());
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
