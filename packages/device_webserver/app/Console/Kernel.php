@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\ReadPinState;
 use App\Console\Commands\SetGpioPinState;
+use App\Jobs\CheckIntoMainServer;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
@@ -27,6 +28,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //
+        $schedule->job(new CheckIntoMainServer())->everyMinute();
     }
 }
