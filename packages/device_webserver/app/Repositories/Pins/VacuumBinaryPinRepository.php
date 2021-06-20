@@ -35,7 +35,7 @@ class VacuumBinaryPinRepository implements IPinRepository
         $result = $this->proxy->read($pin);
 
         if ($result->isFailure()) {
-            return $result;
+            throw new Exception($result->getErrors()[0] ?? 'Unspecified Error');
         }
 
         /** @var VacuumBinaryProxyResponseDTO */
