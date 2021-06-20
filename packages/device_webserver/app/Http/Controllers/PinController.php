@@ -47,7 +47,7 @@ class PinController extends Controller
     {
         $this->validate($request, [
             'pin_number' => 'required|numeric',
-            'power' => 'required|boolean'
+            'pin_power_state' => 'required|boolean'
         ]);
 
         $dto = new SetPinPowerDTO($request->all());
