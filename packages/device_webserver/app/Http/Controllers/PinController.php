@@ -34,13 +34,13 @@ class PinController extends Controller
         if ($result->isFailure()) {
             return response()->json([
                 'errors' => $result->getErrors()
-            ], 500);
+            ], 500, ['Content-Type' => 'application/json']);
         }
 
         /** @var GetPinStateResponseDTO */
         $response = $result->getValue();
 
-        return response()->json($response->toArray());
+        return response()->json($response->toArray(), 200, ['Content-Type' => 'application/json']);
     }
 
     public function setPinPower(Request $request): JsonResponse
@@ -57,9 +57,9 @@ class PinController extends Controller
         if ($result->isFailure()) {
             return response()->json([
                 'errors' => $result->getErrors()
-            ], 500);
+            ], 500, ['Content-Type' => 'application/json']);
         }
 
-        return response()->json(['message' => 'ok']);
+        return response()->json(['message' => 'ok'], 200, ['Content-Type' => 'application/json']);
     }
 }
