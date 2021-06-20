@@ -14,3 +14,6 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->post('/pin/getStatus', [\App\Http\Controllers\PinController::class, 'getPinState']);
+$router->post('pin/setPower', [\App\Http\Controllers\PinController::class, 'setPinPower']);
