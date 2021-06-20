@@ -17,7 +17,7 @@ class HttpMainServerRepository implements IMainServerRepository
         $main_server_url = env('MAIN_SERVER_URL');
 
         try {
-            $response = Http::get($main_server_url . '/checkin');
+            $response = Http::get($main_server_url . '/api/v1/devices/check_in');
         } catch(\Exception $e) {
             return Result::fail($e->getMessage());
         }
