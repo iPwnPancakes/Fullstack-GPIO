@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\UseCases\Vacuum\GetConnectionInformation\{GetConnectionInformation, GetConnectionInformationDTO, GetConnectionInformationResponseDTO};
+use App\UseCases\Vacuum\GetConnectionInformation\{GetConnectionInformation,
+    GetConnectionInformationDTO,
+    GetConnectionInformationResponseDTO};
 use App\UseCases\Vacuum\Ping\{Ping, PingDTO};
 use App\UseCases\Vacuum\SetPower\{SetPower, SetPowerDTO};
 use Exception;
@@ -39,18 +41,17 @@ class FrontendController extends Controller
             return response()->json($response->toArray(), 200);
         } catch (Exception $e) {
             $message = $e->getMessage() ?? 'Unhandled Exception';
-            $code = $e->getCode() ? $e->getCode() : 500;
 
             return response()->json([
                 'errors' => ['unhandled' => $message],
-            ], $code);
+            ], 500);
         }
     }
 
     public function ping($id)
     {
         try {
-            $dto = new PingDTO(['vacuum_id' =>  $id]);
+            $dto = new PingDTO(['vacuum_id' => $id]);
 
             $result = $this->pingCommand->execute($dto);
 
@@ -61,11 +62,10 @@ class FrontendController extends Controller
             return response()->json(['message' => 'ok'], 200);
         } catch (Exception $e) {
             $message = $e->getMessage() ?? 'Unhandled Exception';
-            $code = $e->getCode() ? $e->getCode() : 500;
 
             return response()->json([
                 'errors' => ['unhandled' => $message],
-            ], $code);
+            ], 500);
         }
     }
 
@@ -83,11 +83,10 @@ class FrontendController extends Controller
             return response()->json(['message' => 'ok'], 200);
         } catch (Exception $e) {
             $message = $e->getMessage() ?? 'Unhandled Exception';
-            $code = $e->getCode() ? $e->getCode() : 500;
 
             return response()->json([
                 'errors' => ['unhandled' => $message],
-            ], $code);
+            ], 500);
         }
     }
 }

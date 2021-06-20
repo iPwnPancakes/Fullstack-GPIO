@@ -14,9 +14,11 @@ class Vacuum extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'last_communication_at' => 'timestamp',
+        'last_communication_at' => 'datetime',
         'connected' => 'boolean',
         'public_ip' => 'string',
         'port' => 'integer'
     ];
+
+    protected $fillable = ['last_communication_at', 'public_ip', 'connected', 'port'];
 }

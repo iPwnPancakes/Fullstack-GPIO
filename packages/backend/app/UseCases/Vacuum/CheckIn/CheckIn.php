@@ -5,6 +5,7 @@ namespace App\UseCases\Vacuum\CheckIn;
 use App\Core\Request;
 use App\Core\Result;
 use App\Core\UseCase;
+use App\Models\Vacuum;
 use App\Repositories\IVacuumRepository;
 use Carbon\Carbon;
 
@@ -31,10 +32,12 @@ class CheckIn extends UseCase
         $exists = $this->vacuumRepo->existsWithPublicIP($request->public_ip);
 
         if (!$exists) {
-            return Result::fail('No vacuum with that IP exists');
+            $vacuum = new Vacuum();
+            $vacuum->public_ip = $request->public_ip;
+            $vacuum->port = 80;
+        } else {
+            $vacuum = $this->vacuumRepo->getVacuumByPublicIP($request->public_ip);
         }
-
-        $vacuum = $this->vacuumRepo->getVacuumByPublicIP($request->public_ip);
 
         $vacuum->connected = true;
         $vacuum->last_communication_at = Carbon::now();

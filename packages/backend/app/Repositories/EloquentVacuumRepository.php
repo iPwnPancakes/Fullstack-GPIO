@@ -19,7 +19,7 @@ class EloquentVacuumRepository implements IVacuumRepository
         $vacuum = Vacuum::where('public_ip', $public_ip)->first();
 
         if (!$vacuum) {
-            throw new Exception('Could not find Vacuum with public ip');
+            return false;
         }
 
         return (bool)$vacuum;
@@ -49,6 +49,12 @@ class EloquentVacuumRepository implements IVacuumRepository
 
     public function save(Vacuum $vacuum): void
     {
-        $vacuum->save();
+        $existing_vacuum = Vacuum::find(1);
+
+        if ($existing_vacuum) {
+            $existing_vacuum->fill($vacuum->attributesToArray());
+        }
+
+        $existing_vacuum->save();
     }
 }

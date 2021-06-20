@@ -30,9 +30,9 @@ class DeviceController extends Controller
                 return response()->json(['errors' => $check_in_result->getErrors()], 500);
             }
 
-            return response()->json(['message' => 'ok'], 200);
+            return response()->json(['message' => 'ok']);
         } catch (Exception $e) {
-            return response()->json(['errors' => [$e->getMessage()]], $e->getCode() ? $e->getCode() : 500);
+            return response()->json(['errors' => [$e->getMessage()]], 500);
         }
     }
 
@@ -47,9 +47,9 @@ class DeviceController extends Controller
                 return response()->json(['errors' => $check_out_result->getErrors()], 500);
             }
 
-            return response()->json(['message' => 'ok'], 200);
+            return response()->json(['message' => 'ok']);
         } catch (Exception $e) {
-            return response()->json(['errors' => [$e->getMessage()]], $e->getCode() ? $e->getCode() : 500);
+            return response()->json(['errors' => [$e->getMessage()]], 500);
         }
     }
 }
