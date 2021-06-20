@@ -17,9 +17,9 @@ class GetConnectionInformation extends UseCase
     }
 
     /**
-     * @param GetLastCommunicationDTO $request
+     * @param GetConnectionInformationDTO $request
      *
-     * @return Result<GetLastCommunicationResponseDTO>
+     * @return Result<GetConnectionInformationResponseDTO>
      */
     public function execute(Request $request): Result
     {
