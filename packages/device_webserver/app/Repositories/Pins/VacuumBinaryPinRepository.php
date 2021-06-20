@@ -7,6 +7,7 @@ use App\Repositories\Pins\IPinRepository;
 use App\Repositories\Pins\Proxies\VacuumBinaryProxy;
 use App\Repositories\Pins\Proxies\VacuumBinaryProxyResponseDTO;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class VacuumBinaryPinRepository implements IPinRepository
 {
@@ -22,6 +23,7 @@ class VacuumBinaryPinRepository implements IPinRepository
         $result = $this->proxy->read($pin);
 
         if ($result->isFailure()) {
+            Log::error($result->getErrors()[0] ?? 'Unspecified Error');
             return false;
         }
 
