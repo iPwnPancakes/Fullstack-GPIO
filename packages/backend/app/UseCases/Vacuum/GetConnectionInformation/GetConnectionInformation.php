@@ -6,7 +6,6 @@ use App\Core\Request;
 use App\Core\Result;
 use App\Core\UseCase;
 use App\Repositories\IVacuumRepository;
-use Carbon\Carbon;
 
 class GetConnectionInformation extends UseCase
 {

@@ -10,6 +10,7 @@ use App\UseCases\Vacuum\Ping\{Ping, PingDTO};
 use App\UseCases\Vacuum\SetPower\{SetPower, SetPowerDTO};
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FrontendController extends Controller
 {
@@ -24,10 +25,10 @@ class FrontendController extends Controller
         $this->setPowerCommand = $setPowerCommand;
     }
 
-    public function getConnectionInformation(Request $request)
+    public function getConnectionInformation(Request $request, $id)
     {
         try {
-            $dto = new GetConnectionInformationDTO($request->toArray());
+            $dto = new GetConnectionInformationDTO(['vacuum_id' => $id]);
 
             $result = $this->getConnectionInformationQuery->execute($dto);
 
