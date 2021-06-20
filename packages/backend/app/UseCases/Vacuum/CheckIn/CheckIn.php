@@ -25,8 +25,8 @@ class CheckIn extends UseCase
      */
     public function execute(Request $request): Result
     {
-        if(!isset($request->public_ip)) {
-            return Result::fail('Must be given a public IP');
+        if(!isset($request->public_ip) || !isset($request->port)) {
+            return Result::fail('Must be given a public IP and port');
         }
 
         $exists = $this->vacuumRepo->existsWithPublicIP($request->public_ip);
@@ -34,11 +34,11 @@ class CheckIn extends UseCase
         if (!$exists) {
             $vacuum = new Vacuum();
             $vacuum->public_ip = $request->public_ip;
-            $vacuum->port = 80;
         } else {
             $vacuum = $this->vacuumRepo->getVacuumByPublicIP($request->public_ip);
         }
 
+        $vacuum->port = $request->port;
         $vacuum->connected = true;
         $vacuum->last_communication_at = Carbon::now();
 

@@ -22,7 +22,7 @@ class DeviceController extends Controller
     public function check_in(Request $request)
     {
         try {
-            $dto = new CheckInDTO($request->all());
+            $dto = new CheckInDTO(['public_ip' => $request->ip(), 'port' => $request->getPort()]);
 
             $check_in_result = $this->checkInCommand->execute($dto);
 
@@ -39,7 +39,7 @@ class DeviceController extends Controller
     public function check_out(Request $request)
     {
         try {
-            $dto = new CheckOutDTO($request->all());
+            $dto = new CheckOutDTO(['public_ip' => $request->ip()]);
 
             $check_out_result = $this->checkOutCommand->execute($dto);
 

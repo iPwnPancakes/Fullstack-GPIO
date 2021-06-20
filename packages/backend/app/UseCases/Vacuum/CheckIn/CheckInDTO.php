@@ -7,4 +7,5 @@ use App\Core\Request;
 class CheckInDTO extends Request
 {
     public $public_ip;
+    public $port;
 }
