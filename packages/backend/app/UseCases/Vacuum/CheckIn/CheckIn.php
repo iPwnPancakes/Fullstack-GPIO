@@ -24,6 +24,10 @@ class CheckIn extends UseCase
      */
     public function execute(Request $request): Result
     {
+        if(!isset($request->public_ip)) {
+            return Result::fail('Must be given a public IP');
+        }
+
         $exists = $this->vacuumRepo->existsWithPublicIP($request->public_ip);
 
         if (!$exists) {

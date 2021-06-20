@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\UseCases\Vacuum\CheckIn\{CheckIn, CheckInDTO};
 use App\UseCases\Vacuum\CheckOut\{CheckOut, CheckOutDTO};
 use Exception;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class DeviceController extends Controller
 {
@@ -22,7 +22,7 @@ class DeviceController extends Controller
     public function check_in(Request $request)
     {
         try {
-            $dto = new CheckInDTO($request->toArray());
+            $dto = new CheckInDTO($request->all());
 
             $check_in_result = $this->checkInCommand->execute($dto);
 
@@ -39,7 +39,7 @@ class DeviceController extends Controller
     public function check_out(Request $request)
     {
         try {
-            $dto = new CheckOutDTO($request->toArray());
+            $dto = new CheckOutDTO($request->all());
 
             $check_out_result = $this->checkOutCommand->execute($dto);
 
