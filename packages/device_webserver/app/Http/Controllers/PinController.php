@@ -23,7 +23,7 @@ class PinController extends Controller
 
     public function getPinState(Request $request): JsonResponse
     {
-        $request->validate([
+        $this->validate($request, [
             'pin_number' => 'required|numeric'
         ]);
 
@@ -45,7 +45,7 @@ class PinController extends Controller
 
     public function setPinPower(Request $request): JsonResponse
     {
-        $request->validate([
+        $this->validate($request, [
             'pin_number' => 'required|numeric',
             'power' => 'required|boolean'
         ]);
