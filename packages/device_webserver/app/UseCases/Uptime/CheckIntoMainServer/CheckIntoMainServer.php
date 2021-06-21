@@ -21,7 +21,9 @@ class CheckIntoMainServer extends \App\Core\UseCase
     }
 
     /**
-     * @inheritDoc
+     * @param CheckIntoMainServerDTO $request
+     *
+     * @return Result<void>
      */
     function execute(Request $request): Result
     {

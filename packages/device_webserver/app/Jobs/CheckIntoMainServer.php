@@ -4,7 +4,7 @@
 namespace App\Jobs;
 
 
-use App\Repositories\MainServer\IMainServerRepository;
+use App\UseCases\Uptime\CheckIntoMainServer\CheckIntoMainServerDTO;
 
 class CheckIntoMainServer extends Job
 {
@@ -13,11 +13,11 @@ class CheckIntoMainServer extends Job
      *
      * @return void
      */
-    public function handle(IMainServerRepository $mainServerRepository)
+    public function handle(\App\UseCases\Uptime\CheckIntoMainServer\CheckIntoMainServer $checkIntoMainServerCommand)
     {
-        $result = $mainServerRepository->checkIn();
+        $result = $checkIntoMainServerCommand->execute(new CheckIntoMainServerDTO());
 
-        if($result->isFailure()) {
+        if ($result->isFailure()) {
             throw new \Exception($result->getErrors()[0] ?? 'Unspecified Connection Error');
         }
     }
