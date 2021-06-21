@@ -34,7 +34,8 @@ class GetConnectionInformation extends UseCase
         $response_dto = new GetConnectionInformationResponseDTO([
             'connected' => $vacuum->connected,
             'last_communication_at' => $vacuum->last_communication_at,
-            'last_communication_attempt_at' => $vacuum->last_communication_attempt_at
+            'last_communication_attempt_at' => $vacuum->last_communication_attempt_at,
+            'is_on' => $vacuum->is_on
         ]);
 
         return Result::ok($response_dto);

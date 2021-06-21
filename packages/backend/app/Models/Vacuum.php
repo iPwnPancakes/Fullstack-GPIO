@@ -17,8 +17,9 @@ class Vacuum extends Model
         'last_communication_at' => 'datetime',
         'connected' => 'boolean',
         'public_ip' => 'string',
-        'port' => 'integer'
+        'port' => 'integer',
+        'is_on' => 'boolean'
     ];
 
-    protected $fillable = ['last_communication_at', 'public_ip', 'connected', 'port'];
+    protected $fillable = ['last_communication_at', 'public_ip', 'connected', 'port', 'is_on'];
 }

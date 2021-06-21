@@ -15,4 +15,7 @@ class GetConnectionInformationResponseDTO extends Response
 
     /** @var Carbon */
     public $last_communication_attempt_at;
+
+    /** @var boolean */
+    public $is_on;
 }

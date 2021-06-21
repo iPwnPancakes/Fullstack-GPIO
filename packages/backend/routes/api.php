@@ -23,7 +23,7 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::prefix('devices')->group(function () {
-        Route::get('check_in', [DeviceController::class, 'check_in']);
+        Route::post('check_in', [DeviceController::class, 'check_in']);
         Route::get('check_out', [DeviceController::class, 'check_out']);
     });
 });

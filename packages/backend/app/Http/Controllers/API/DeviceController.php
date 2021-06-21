@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\UseCases\Vacuum\CheckIn\{CheckIn, CheckInDTO};
 use App\UseCases\Vacuum\CheckOut\{CheckOut, CheckOutDTO};
 use Exception;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class DeviceController extends Controller
@@ -19,10 +21,24 @@ class DeviceController extends Controller
         $this->checkOutCommand = $checkOutCommand;
     }
 
-    public function check_in(Request $request)
+    public function check_in(Request $request): JsonResponse
     {
+        $validator = Validator::make($request->toArray(), [
+            'pin_number' => 'required|numeric',
+            'pin_power' => 'required|boolean'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+
         try {
-            $dto = new CheckInDTO(['public_ip' => $request->ip(), 'port' => $request->getPort()]);
+            $dto = new CheckInDTO([
+                'public_ip' => $request->ip(),
+                'port' => $request->getPort(),
+                'pin_number' => $request->get('pin_number'),
+                'pin_state' => $request->get('pin_power')
+            ]);
 
             $check_in_result = $this->checkInCommand->execute($dto);
 
@@ -36,7 +52,7 @@ class DeviceController extends Controller
         }
     }
 
-    public function check_out(Request $request)
+    public function check_out(Request $request): JsonResponse
     {
         try {
             $dto = new CheckOutDTO(['public_ip' => $request->ip()]);

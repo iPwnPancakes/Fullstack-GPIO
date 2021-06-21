@@ -8,4 +8,6 @@ class CheckInDTO extends Request
 {
     public $public_ip;
     public $port;
+    public $pin_number;
+    public $pin_state;
 }

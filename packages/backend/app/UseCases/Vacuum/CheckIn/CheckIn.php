@@ -27,6 +27,8 @@ class CheckIn extends UseCase
     {
         if(!isset($request->public_ip) || !isset($request->port)) {
             return Result::fail('Must be given a public IP and port');
+        } else if(!isset($request->pin_state)) {
+            return Result::fail('Must be given the pin state');
         }
 
         $exists = $this->vacuumRepo->existsWithPublicIP($request->public_ip);
@@ -40,6 +42,7 @@ class CheckIn extends UseCase
 
         $vacuum->port = $request->port;
         $vacuum->connected = true;
+        $vacuum->is_on = (bool)$request->pin_state;
         $vacuum->last_communication_at = Carbon::now();
 
         $this->vacuumRepo->save($vacuum);
