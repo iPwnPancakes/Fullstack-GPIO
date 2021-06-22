@@ -14,7 +14,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        VacuumTimedOut::class => MarkVacuumDisconnected::class
+        VacuumTimedOut::class => [MarkVacuumDisconnected::class]
     ];
 
     /**
