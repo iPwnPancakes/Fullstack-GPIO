@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCases\Vacuum\CheckOut;
+namespace App\UseCases\Vacuum\CheckOutByPublicIP;
 
 use App\Core\Request;
 use App\Core\Result;
@@ -8,7 +8,7 @@ use App\Core\UseCase;
 use App\Repositories\IVacuumRepository;
 use Carbon\Carbon;
 
-class CheckOut extends UseCase
+class CheckOutByPublicIP extends UseCase
 {
     private $vacuumRepo;
 
@@ -18,7 +18,7 @@ class CheckOut extends UseCase
     }
 
     /**
-     * @param CheckOutDTO $request
+     * @param CheckOutByPublicIPDTO $request
      *
      * @return Result<void>
      */

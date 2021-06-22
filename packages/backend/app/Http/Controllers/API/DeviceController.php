@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\UseCases\Vacuum\CheckIn\{CheckIn, CheckInDTO};
-use App\UseCases\Vacuum\CheckOut\{CheckOut, CheckOutDTO};
+use App\UseCases\Vacuum\CheckOutByPublicIP\{CheckOutByPublicIP, CheckOutByPublicIPDTO};
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +15,7 @@ class DeviceController extends Controller
     private $checkInCommand;
     private $checkOutCommand;
 
-    public function __construct(CheckIn $checkInCommand, CheckOut $checkOutCommand)
+    public function __construct(CheckIn $checkInCommand, CheckOutByPublicIP $checkOutCommand)
     {
         $this->checkInCommand = $checkInCommand;
         $this->checkOutCommand = $checkOutCommand;
@@ -55,7 +55,7 @@ class DeviceController extends Controller
     public function check_out(Request $request): JsonResponse
     {
         try {
-            $dto = new CheckOutDTO(['public_ip' => $request->ip()]);
+            $dto = new CheckOutByPublicIPDTO(['public_ip' => $request->ip()]);
 
             $check_out_result = $this->checkOutCommand->execute($dto);
 

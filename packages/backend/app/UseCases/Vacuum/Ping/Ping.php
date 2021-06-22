@@ -46,7 +46,7 @@ class Ping extends UseCase
             return $driver_result;
         }
 
-        /** @var IDriverConnection */
+        /** @var IDriverConnection $driver */
         $driver = $driver_result->getValue();
 
         $ping_result = $driver->ping();
