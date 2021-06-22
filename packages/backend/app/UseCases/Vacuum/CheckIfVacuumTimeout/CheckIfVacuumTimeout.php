@@ -38,6 +38,10 @@ class CheckIfVacuumTimeout extends UseCase
         /** @var Carbon $last_communication */
         $last_communication = $vacuum->last_communication_at;
 
+        if (!$vacuum->connected) {
+            return Result::ok();
+        }
+
         if ($last_communication->addMinutes(5)->lessThanOrEqualTo(Carbon::now())) {
             VacuumTimedOut::dispatch($vacuum->id);
         }

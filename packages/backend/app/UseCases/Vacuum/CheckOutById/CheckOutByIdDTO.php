@@ -4,7 +4,9 @@
 namespace App\UseCases\Vacuum\CheckOutById;
 
 
-class CheckOutByIdDTO extends \App\Core\Request
+use App\Core\Request;
+
+class CheckOutByIdDTO extends Request
 {
-    public $vacuum_ip;
+    public $vacuum_id;
 }

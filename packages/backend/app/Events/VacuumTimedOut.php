@@ -22,8 +22,9 @@ class VacuumTimedOut
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($vacuum_id)
     {
         Log::debug('Event Dispatched: ' . self::class);
+        $this->vacuum_id = $vacuum_id;
     }
 }

@@ -30,7 +30,7 @@ class EloquentVacuumRepository implements IVacuumRepository
         $vacuum = Vacuum::find($id);
 
         if (!$vacuum) {
-            throw new Exception('Could not find Vacuum with public ip');
+            throw new Exception('Could not find Vacuum with ID ' . $id);
         }
 
         return $vacuum;

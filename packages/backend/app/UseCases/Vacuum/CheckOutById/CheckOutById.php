@@ -27,13 +27,13 @@ class CheckOutById extends UseCase
      */
     function execute(Request $request): Result
     {
-        $exists = $this->vacuumRepository->exists($request->vacuum_ip);
+        $exists = $this->vacuumRepository->exists($request->vacuum_id);
 
         if (!$exists) {
             return Result::fail('Vacuum does not exist');
         }
 
-        $vacuum = $this->vacuumRepository->getVacuumByVacuumID($request->vacuum_ip);
+        $vacuum = $this->vacuumRepository->getVacuumByVacuumID($request->vacuum_id);
 
         $vacuum->connected = false;
 
