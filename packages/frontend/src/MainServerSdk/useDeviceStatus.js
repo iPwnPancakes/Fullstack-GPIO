@@ -1,8 +1,12 @@
-import {useEffect, useState} from 'react';
-import {SDK} from './src';
+import {useEffect, useState} from "react";
+import {SDK} from "./src";
 
-export function useMainServer() {
-    const [isOnline, setIsOnline] = useState(false);
+export function useDeviceStatus() {
+    const [deviceState, setDeviceState] = useState({
+        online: false,
+        is_on: false,
+        last_communication_time: 'N/A'
+    });
     const [fetchState, setFetchState] = useState('initial');
     const [error, setError] = useState(null);
 
@@ -11,13 +15,16 @@ export function useMainServer() {
             setFetchState('polling');
 
             SDK.GetDeviceState(1)
-                .then(() => {
+                .then(({connected, last_communication_at, last_communication_attempt_at, is_on}) => {
                     setError(null);
-                    setIsOnline(true);
+                    setDeviceState({
+                        online: connected,
+                        is_on: is_on,
+                        last_communication_time: last_communication_at,
+                    });
                 })
                 .catch((e) => {
                     setError(e ?? 'Unspecified Error');
-                    setIsOnline(false);
                 })
                 .finally(() => {
                     setFetchState('done');
@@ -29,5 +36,5 @@ export function useMainServer() {
         };
     }, []);
 
-    return [isOnline, fetchState, error];
+    return [deviceState, fetchState, error];
 }
