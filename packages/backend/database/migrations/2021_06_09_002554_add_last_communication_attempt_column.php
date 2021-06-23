@@ -14,7 +14,7 @@ class AddLastCommunicationAttemptColumn extends Migration
     public function up()
     {
         Schema::table('vacuum', function (Blueprint $table) {
-            $table->timestamp('last_communication_attempt_at');
+            $table->dateTime('last_communication_attempt_at');
         });
     }
 
