@@ -6,7 +6,7 @@ export function DeviceStatus() {
 
     if (fetchState === 'initial') {
         return (
-            <Box>Loading</Box>
+            <Box>Loading...</Box>
         );
     }
 
