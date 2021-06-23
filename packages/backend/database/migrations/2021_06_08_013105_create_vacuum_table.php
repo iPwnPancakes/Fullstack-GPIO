@@ -15,7 +15,7 @@ class CreateVacuumTable extends Migration
     {
         Schema::create('vacuum', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('last_communication_at');
+            $table->dateTime('last_communication_at');
             $table->boolean('connected')->default(false);
             $table->ipAddress('public_ip');
             $table->unsignedInteger('port')->default(80);
