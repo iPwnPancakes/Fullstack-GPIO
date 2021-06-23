@@ -1,8 +1,8 @@
 import {useDeviceStatus} from "../MainServerSdk/useDeviceStatus";
 import {Box, Text} from "@chakra-ui/react";
 
-export function DeviceStatus(props) {
-    const [deviceState, fetchState, error] = useDeviceStatus();
+export function DeviceStatus() {
+    const [deviceState, fetchState] = useDeviceStatus();
 
     if (fetchState === 'initial') {
         return (
