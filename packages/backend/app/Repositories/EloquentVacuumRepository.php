@@ -47,7 +47,7 @@ class EloquentVacuumRepository implements IVacuumRepository
         return $vacuum;
     }
 
-    public function save(Vacuum $vacuum): void
+    public function save(Vacuum $vacuum): int
     {
         $existing_vacuum = Vacuum::find(1);
 
@@ -56,5 +56,7 @@ class EloquentVacuumRepository implements IVacuumRepository
         }
 
         $existing_vacuum->save();
+
+        return $existing_vacuum->id;
     }
 }

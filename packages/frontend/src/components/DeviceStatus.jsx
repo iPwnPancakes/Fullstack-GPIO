@@ -1,24 +1,40 @@
 import {useDeviceStatus} from "../MainServerSdk/useDeviceStatus";
-import {Box, Container, Text} from "@chakra-ui/react";
+import {Badge, Box, Center, Container, Flex, Text} from "@chakra-ui/react";
 
 export function DeviceStatus() {
     const [deviceState, fetchState] = useDeviceStatus();
 
-    if (fetchState === 'initial') {
+    if (fetchState === 'polling') {
         return (
-            <Box>Loading...</Box>
+            <Box>
+                <Text fontSize={'xl'}>Loading...</Text>
+            </Box>
         );
     }
 
     return (
-        <Container>
+        <Container
+            margin={4}
+            padding={4}
+            border={'1px'}
+            borderRadius={6}
+            borderColor={'#CCC'}
+            boxShadow={'md'}
+        >
             <Box>
-                <Text fontSize={'xl'}>Device Status</Text>
-                <Text>Online: {deviceState.online ? 'True' : 'False'}</Text>
+                <Flex flexDirection={'row'} justifyContent={'space-between'}>
+                    <Center flex={1} justifyContent={'space-between'}>
+                        <Text fontSize={'xl'}>Device Status</Text>
+                        {deviceState.online ?
+                            <Badge colorScheme={'green'}>Online</Badge> :
+                            <Badge colorScheme={'red'}>Offline</Badge>
+                        }
+                    </Center>
+                </Flex>
                 <Text>Vacuum On: {deviceState.is_on ? 'True' : 'False'}</Text>
                 <Text>
                     Last
-                    Communication: {deviceState.last_communication_time ? deviceState.last_communication_time : 'N/A'}
+                    Communication: {deviceState.last_communication_time ?? 'N/A'}
                 </Text>
             </Box>
         </Container>

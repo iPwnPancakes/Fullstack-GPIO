@@ -5,6 +5,7 @@ namespace App\UseCases\Vacuum\CheckIn;
 use App\Core\Request;
 use App\Core\Result;
 use App\Core\UseCase;
+use App\Events\DeviceCheckin;
 use App\Models\Vacuum;
 use App\Repositories\IVacuumRepository;
 use Carbon\Carbon;
@@ -25,9 +26,9 @@ class CheckIn extends UseCase
      */
     public function execute(Request $request): Result
     {
-        if(!isset($request->public_ip) || !isset($request->port)) {
+        if (!isset($request->public_ip) || !isset($request->port)) {
             return Result::fail('Must be given a public IP and port');
-        } else if(!isset($request->pin_state)) {
+        } else if (!isset($request->pin_state)) {
             return Result::fail('Must be given the pin state');
         }
 
@@ -45,7 +46,9 @@ class CheckIn extends UseCase
         $vacuum->is_on = (bool)$request->pin_state;
         $vacuum->last_communication_at = Carbon::now();
 
-        $this->vacuumRepo->save($vacuum);
+        $id = $this->vacuumRepo->save($vacuum);
+
+        DeviceCheckin::dispatch($id, $vacuum->last_communication_at, $vacuum->is_on);
 
         return Result::ok();
     }
