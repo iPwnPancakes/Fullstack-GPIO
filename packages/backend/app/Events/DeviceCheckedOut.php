@@ -9,7 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Support\Facades\Log;
 
-class DeviceCheckin implements ShouldBroadcast
+class DeviceCheckedOut implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets;
 
@@ -27,11 +27,6 @@ class DeviceCheckin implements ShouldBroadcast
         Log::debug('Event Dispatched: ' . self::class);
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return Channel
-     */
     public function broadcastOn()
     {
         return new Channel('devices');
@@ -39,7 +34,7 @@ class DeviceCheckin implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'onCheckin';
+        return 'onCheckout';
     }
 
     public function broadcastWith()

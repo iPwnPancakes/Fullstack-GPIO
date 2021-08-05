@@ -41,6 +41,7 @@ class FrontendController extends Controller
 
             return response()->json($response->toArray(), 200);
         } catch (Exception $e) {
+            Log::error($e);
             $message = $e->getMessage() ?? 'Unhandled Exception';
 
             return response()->json([
@@ -62,6 +63,7 @@ class FrontendController extends Controller
 
             return response()->json(['message' => 'ok'], 200);
         } catch (Exception $e) {
+            Log::error($e);
             $message = $e->getMessage() ?? 'Unhandled Exception';
 
             return response()->json([
@@ -83,6 +85,7 @@ class FrontendController extends Controller
 
             return response()->json(['message' => 'ok'], 200);
         } catch (Exception $e) {
+            Log::error($e);
             $message = $e->getMessage() ?? 'Unhandled Exception';
 
             return response()->json([

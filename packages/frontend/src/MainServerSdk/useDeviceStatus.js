@@ -30,13 +30,21 @@ export function useDeviceStatus() {
                 setFetchState('done');
             });
 
-        Websockets.channel('devices').listen('.onCheckin', (event) => {
-            setDeviceState({
-                online: true,
-                is_on: event.power_status,
-                last_communication_time: event.checkin_time
+        Websockets.channel('devices')
+            .listen('.onCheckin', (event) => {
+                setDeviceState({
+                    online: true,
+                    is_on: event.power_status,
+                    last_communication_time: event.checkin_time
+                });
+            })
+            .listen('.onCheckout', event => {
+                setDeviceState({
+                    online: false,
+                    is_on: event.power_status,
+                    last_communication_time: event.checkin_time
+                });
             });
-        });
     }, []);
 
     return [deviceState, fetchState, error];

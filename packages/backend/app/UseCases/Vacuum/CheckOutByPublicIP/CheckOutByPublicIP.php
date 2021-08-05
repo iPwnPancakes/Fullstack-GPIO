@@ -5,6 +5,7 @@ namespace App\UseCases\Vacuum\CheckOutByPublicIP;
 use App\Core\Request;
 use App\Core\Result;
 use App\Core\UseCase;
+use App\Events\DeviceCheckedOut;
 use App\Repositories\IVacuumRepository;
 use Carbon\Carbon;
 
@@ -36,6 +37,8 @@ class CheckOutByPublicIP extends UseCase
         $vacuum->last_communication_at = Carbon::now();
 
         $this->vacuumRepo->save($vacuum);
+
+        DeviceCheckedOut::dispatch($vacuum->id, $vacuum->last_communication_at, $vacuum->is_on);
 
         return Result::ok();
     }

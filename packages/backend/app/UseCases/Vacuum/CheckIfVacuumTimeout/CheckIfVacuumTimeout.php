@@ -7,7 +7,7 @@ namespace App\UseCases\Vacuum\CheckIfVacuumTimeout;
 use App\Core\Request;
 use App\Core\Result;
 use App\Core\UseCase;
-use App\Events\VacuumTimedOut;
+use App\Events\DeviceCheckedOut;
 use App\Repositories\IVacuumRepository;
 use Carbon\Carbon;
 
@@ -43,7 +43,7 @@ class CheckIfVacuumTimeout extends UseCase
         }
 
         if ($last_communication->addMinutes(5)->lessThanOrEqualTo(Carbon::now())) {
-            VacuumTimedOut::dispatch($vacuum->id);
+            DeviceCheckedOut::dispatch($vacuum->id, $vacuum->last_communication_at, $vacuum->is_on);
         }
 
         return Result::ok();
