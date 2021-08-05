@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\UseCases\Vacuum\CheckIn\{CheckIn, CheckInDTO};
 use App\UseCases\Vacuum\CheckOutByPublicIP\{CheckOutByPublicIP, CheckOutByPublicIPDTO};
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -48,6 +49,7 @@ class DeviceController extends Controller
 
             return response()->json(['message' => 'ok']);
         } catch (Exception $e) {
+            Log::error($e);
             return response()->json(['errors' => [$e->getMessage()]], 500);
         }
     }
@@ -65,6 +67,7 @@ class DeviceController extends Controller
 
             return response()->json(['message' => 'ok']);
         } catch (Exception $e) {
+            Log::error($e);
             return response()->json(['errors' => [$e->getMessage()]], 500);
         }
     }
