@@ -61,6 +61,7 @@ class SetPower extends UseCase
             return $set_power_result;
         }
 
+        $vacuum->is_on = $request->power_state;
         $vacuum->last_communication_at = Carbon::now();
         $this->vacuumRepo->save($vacuum);
 
