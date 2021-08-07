@@ -44,7 +44,10 @@ class VacuumDeviceDriver implements IDriverConnection
     public function setPower(bool $power): Result
     {
         try {
-            $response = Http::get($this->vacuum->public_ip . ':' . $this->vacuum->port . '/setPower?power=' . $power);
+            $response = Http::post(
+                $this->vacuum->public_ip . ':' . $this->vacuum->port . '/setPower',
+                ['power' => $power]
+            );
 
             if (!$response->ok()) {
                 return Result::fail('Response received from device not ok');

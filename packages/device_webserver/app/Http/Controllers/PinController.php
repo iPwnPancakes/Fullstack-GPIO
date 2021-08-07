@@ -49,11 +49,12 @@ class PinController extends Controller
     public function setPinPower(Request $request): JsonResponse
     {
         $this->validate($request, [
-            'pin_number' => 'required|numeric',
-            'pin_power_state' => 'required|boolean'
+            'power' => 'required|boolean'
         ]);
 
-        $dto = new SetPinPowerDTO($request->all());
+        $dto = new SetPinPowerDTO();
+        $dto->pin_number = env('VACUUM_PIN_NUMBER', null);
+        $dto->pin_power_state = $request->get('power');
 
         $result = $this->setPinPowerCommand->execute($dto);
 
