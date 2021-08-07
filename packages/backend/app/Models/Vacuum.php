@@ -21,5 +21,5 @@ class Vacuum extends Model
         'is_on' => 'boolean'
     ];
 
-    protected $fillable = ['last_communication_at', 'public_ip', 'connected', 'port', 'is_on'];
+    protected $fillable = ['last_communication_at', 'last_communication_attempt_at', 'public_ip', 'connected', 'port', 'is_on'];
 }
