@@ -45,11 +45,12 @@ class VacuumDeviceDriver implements IDriverConnection
     {
         try {
             $response = Http::post(
-                $this->vacuum->public_ip . ':' . $this->vacuum->port . '/setPower',
+                $this->vacuum->public_ip . ':' . $this->vacuum->port . '/pin/setPower',
                 ['power' => $power]
             );
 
             if (!$response->ok()) {
+                Log::debug($response);
                 return Result::fail('Response received from device not ok');
             }
 

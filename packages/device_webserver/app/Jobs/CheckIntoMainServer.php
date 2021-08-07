@@ -5,6 +5,7 @@ namespace App\Jobs;
 
 
 use App\UseCases\Uptime\CheckIntoMainServer\CheckIntoMainServerDTO;
+use Illuminate\Support\Facades\Log;
 
 class CheckIntoMainServer extends Job
 {
@@ -15,10 +16,15 @@ class CheckIntoMainServer extends Job
      */
     public function handle(\App\UseCases\Uptime\CheckIntoMainServer\CheckIntoMainServer $checkIntoMainServerCommand)
     {
-        $result = $checkIntoMainServerCommand->execute(new CheckIntoMainServerDTO());
+        try {
+            $result = $checkIntoMainServerCommand->execute(new CheckIntoMainServerDTO());
 
-        if ($result->isFailure()) {
-            throw new \Exception($result->getErrors()[0] ?? 'Unspecified Connection Error');
+            if ($result->isFailure()) {
+                throw new \Exception($result->getErrors()[0] ?? 'Unspecified Connection Error');
+            }
+        } catch (\Exception $e) {
+            Log::error($e);
         }
+
     }
 }

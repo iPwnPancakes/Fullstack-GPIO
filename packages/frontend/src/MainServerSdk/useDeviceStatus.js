@@ -6,7 +6,8 @@ export function useDeviceStatus() {
     const [deviceState, setDeviceState] = useState({
         online: false,
         is_on: false,
-        last_communication_time: null
+        last_communication_at: null,
+        last_communication_attempt_at: null
     });
     const [fetchState, setFetchState] = useState('polling');
     const [error, setError] = useState(null);
@@ -19,8 +20,9 @@ export function useDeviceStatus() {
                 setError(null);
                 setDeviceState({
                     online: connected,
-                    is_on: is_on,
-                    last_communication_time: last_communication_at,
+                    is_on,
+                    last_communication_at,
+                    last_communication_attempt_at
                 });
             })
             .catch((e) => {
@@ -35,16 +37,24 @@ export function useDeviceStatus() {
                 setDeviceState({
                     online: true,
                     is_on: event.power_status,
-                    last_communication_time: event.checkin_time
+                    last_communication_at: event.checkin_time
                 });
             })
             .listen('.onCheckout', event => {
                 setDeviceState({
                     online: false,
                     is_on: event.power_status,
-                    last_communication_time: event.checkin_time
+                    last_communication_at: event.checkin_time
                 });
-            });
+            })
+            .listen('.deviceCommunicationEvent', event => {
+                setDeviceState({
+                    online: event.connected,
+                    is_on: event.power_status,
+                    last_communication_at: event.checkin_time,
+                    last_communication_attempt_at: event.last_communication_attempt_at
+                })
+            })
     }, []);
 
     return [deviceState, fetchState, error];

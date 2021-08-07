@@ -19,7 +19,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('frontend')->group(function () {
         Route::get('ping/{id}', [FrontendController::class, 'ping']);
         Route::get('getConnectionInfo/{id}', [FrontendController::class, 'getConnectionInformation']);
-        Route::post('set_power', [FrontendController::class, 'setPower']);
+        Route::post('setPower/{id}', [FrontendController::class, 'setPower']);
         Route::get('getPower/{id}', [FrontendController::class, 'getPower']);
     });
 

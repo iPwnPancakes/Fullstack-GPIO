@@ -74,10 +74,16 @@ class FrontendController extends Controller
         }
     }
 
-    public function setPower(Request $request)
+    public function setPower(Request $request, $id)
     {
         try {
+            $request->validate([
+                'power' => 'required|boolean'
+            ]);
+
             $dto = new SetPowerDTO($request->toArray());
+            $dto->vacuum_id = $id;
+            $dto->power_state = $request->get('power');
 
             $result = $this->setPowerCommand->execute($dto);
 

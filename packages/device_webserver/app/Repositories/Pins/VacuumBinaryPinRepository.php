@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Pins;
 
+use App\Core\Result;
 use App\Domain\Pins\Pin;
 use App\Repositories\Pins\IPinRepository;
 use App\Repositories\Pins\Proxies\VacuumBinaryProxy;
@@ -18,9 +19,9 @@ class VacuumBinaryPinRepository implements IPinRepository
         $this->proxy = new VacuumBinaryProxy();
     }
 
-    public function exists(int $pin): bool
+    public function exists(int $pin_number): bool
     {
-        $result = $this->proxy->read($pin);
+        $result = $this->proxy->read($pin_number);
 
         if ($result->isFailure()) {
             Log::error($result->getErrors()[0] ?? 'Unspecified Error');
@@ -30,9 +31,9 @@ class VacuumBinaryPinRepository implements IPinRepository
         return true;
     }
 
-    public function getPinByPinNumber(int $pin): Pin
+    public function getPinByPinNumber(int $pin_number): Pin
     {
-        $result = $this->proxy->read($pin);
+        $result = $this->proxy->read($pin_number);
 
         if ($result->isFailure()) {
             throw new Exception($result->getErrors()[0] ?? 'Unspecified Error');
@@ -47,15 +48,12 @@ class VacuumBinaryPinRepository implements IPinRepository
             throw new Exception($pin_result->getErrorMessageBag()->first());
         }
 
-        /** @var Pin */
-        $pin = $pin_result->getValue();
-
-        return $pin;
+        return $pin_result->getValue();
     }
 
-    public function save(Pin $pin): void
+    public function save(Pin $newPinState): void
     {
-        $result = $this->proxy->write($pin->getPinNumber(), $pin->getPowerState());
+        $result = $this->proxy->write($newPinState->getPinNumber(), $newPinState->getPowerState());
 
         if ($result->isFailure()) {
             throw new Exception($result->getErrorMessageBag()->first());

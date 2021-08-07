@@ -32,10 +32,8 @@ export function DeviceStatus() {
                     </Center>
                 </Flex>
                 <Text>Vacuum On: {deviceState.is_on ? 'True' : 'False'}</Text>
-                <Text>
-                    Last
-                    Communication: {deviceState.last_communication_time ?? 'N/A'}
-                </Text>
+                <Text>Last Communication: {deviceState.last_communication_at ?? 'N/A'}</Text>
+                <Text>Last Attempted Communication: {deviceState.last_communication_attempt_at ?? 'N/A'}</Text>
             </Box>
         </Container>
     )

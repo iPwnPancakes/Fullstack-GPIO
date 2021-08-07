@@ -6,8 +6,8 @@ use App\Core\Result;
 
 class Pin
 {
-    private $number;
-    private $power;
+    public $number;
+    public $power;
 
     private function __construct(int $pin_number, bool $power_state)
     {

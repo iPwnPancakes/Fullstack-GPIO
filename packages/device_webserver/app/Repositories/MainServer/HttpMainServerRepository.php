@@ -7,6 +7,7 @@ namespace App\Repositories\MainServer;
 use App\Core\Result;
 use App\Domain\Pins\Pin;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class HttpMainServerRepository implements IMainServerRepository
 {
@@ -22,11 +23,13 @@ class HttpMainServerRepository implements IMainServerRepository
                 'pin_number' => $pin->getPinNumber(),
                 'pin_power' => $pin->getPowerState()
             ]);
-        } catch(\Exception $e) {
+
+            Log::debug('Checked in');
+        } catch (\Exception $e) {
             return Result::fail($e->getMessage());
         }
 
-        if($response->failed()) {
+        if ($response->failed()) {
             return Result::fail('Communication Failure. Response code ' . $response->status());
         }
 
