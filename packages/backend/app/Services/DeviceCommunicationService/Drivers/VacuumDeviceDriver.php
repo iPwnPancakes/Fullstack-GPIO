@@ -7,6 +7,7 @@ use App\Models\Vacuum;
 use Exception;
 use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class VacuumDeviceDriver implements IDriverConnection
 {
@@ -63,22 +64,25 @@ class VacuumDeviceDriver implements IDriverConnection
         }
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getPower(): Result
     {
         try {
-            $response = Http::get($this->vacuum->public_ip . ':' . $this->vacuum->port . '/getPower');
+            $response = Http::get($this->vacuum->public_ip . ':' . $this->vacuum->port . '/getStatus');
 
             if (!$response->ok()) {
-                return Result::fail('Response received from device not ok');
+                return Result::fail('Device response received but did not have 200 status');
             }
 
             $json = $response->json();
 
-            if ($json === null) {
-                return Result::fail('Invalid response from device');
+            if (($json['data']['power'] ?? null) === null) {
+                return Result::fail('Device response invalid JSON');
             }
 
-            return Result::ok();
+            return Result::ok((bool)$json['data']['power']);
         } catch (ConnectException $e) {
             return Result::fail('Could not connect to device');
         } catch (Exception $e) {

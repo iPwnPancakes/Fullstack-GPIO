@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\UseCases\Vacuum\GetPower\GetPowerDTO;
+use App\UseCases\Vacuum\GetPower\GetPowerUseCase;
 use App\UseCases\Vacuum\GetConnectionInformation\{GetConnectionInformation,
     GetConnectionInformationDTO,
-    GetConnectionInformationResponseDTO};
+    GetConnectionInformationResponseDTO
+};
+use Illuminate\Http\JsonResponse;
 use App\UseCases\Vacuum\Ping\{Ping, PingDTO};
 use App\UseCases\Vacuum\SetPower\{SetPower, SetPowerDTO};
 use Exception;
@@ -14,15 +18,13 @@ use Illuminate\Support\Facades\Log;
 
 class FrontendController extends Controller
 {
-    private $getConnectionInformationQuery;
-    private $pingCommand;
-    private $setPowerCommand;
-
-    public function __construct(GetConnectionInformation $getConnectionInformationQuery, Ping $pingCommand, SetPower $setPowerCommand)
+    public function __construct(
+        private GetConnectionInformation $getConnectionInformationQuery,
+        private Ping $pingCommand,
+        private SetPower $setPowerCommand,
+        private GetPowerUseCase $getPowerUseCase
+    )
     {
-        $this->getConnectionInformationQuery = $getConnectionInformationQuery;
-        $this->pingCommand = $pingCommand;
-        $this->setPowerCommand = $setPowerCommand;
     }
 
     public function getConnectionInformation(Request $request, $id)
@@ -91,6 +93,26 @@ class FrontendController extends Controller
             return response()->json([
                 'errors' => ['unhandled' => $message],
             ], 500);
+        }
+    }
+
+    public function getPower($id): JsonResponse
+    {
+        try {
+            $dto = new GetPowerDTO([]);
+            $dto->device_id = $id;
+
+            $result = $this->getPowerUseCase->execute($dto);
+
+            if ($result->isFailure()) {
+                return response()->json(['errors' => $result->getErrors()], 403);
+            }
+
+            return response()->json(['data' => $result->getValue()]);
+        } catch (Exception $e) {
+            Log::error($e);
+
+            return response()->json(['errors' => [$e->getMessage()]], 500);
         }
     }
 }

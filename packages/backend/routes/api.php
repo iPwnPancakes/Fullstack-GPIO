@@ -20,6 +20,7 @@ Route::prefix('v1')->group(function () {
         Route::get('ping/{id}', [FrontendController::class, 'ping']);
         Route::get('getConnectionInfo/{id}', [FrontendController::class, 'getConnectionInformation']);
         Route::post('set_power', [FrontendController::class, 'setPower']);
+        Route::get('getPower/{id}', [FrontendController::class, 'getPower']);
     });
 
     Route::prefix('devices')->group(function () {

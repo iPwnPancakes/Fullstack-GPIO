@@ -10,5 +10,9 @@ interface IDriverConnection
     public function __construct(Vacuum $vacuum);
     public function ping(): Result;
     public function setPower(bool $power): Result;
+
+    /**
+     * @return Result<bool>
+     */
     public function getPower(): Result;
 }
